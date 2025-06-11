@@ -1,8 +1,12 @@
 package com.jaypatel.auth.controller;
 
-import com.jaypatel.auth.dto.*;
-import com.jaypatel.auth.service.AuthService;
+import com.jaypatel.auth.dto.AuthenticationRequest;
+import com.jaypatel.auth.dto.AuthenticationResponse;
+import com.jaypatel.auth.dto.RegisterRequest;
+import com.jaypatel.auth.service.AuthenticationService;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,15 +14,17 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public AuthResponse register(@RequestBody RegisterRequest request) {
-        return authService.register(request);
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+        AuthenticationResponse response = authenticationService.register(request);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody LoginRequest request) {
-        return authService.login(request);
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
+        AuthenticationResponse response = authenticationService.login(request);
+        return ResponseEntity.ok(response);
     }
 }
